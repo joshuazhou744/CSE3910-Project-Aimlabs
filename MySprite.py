@@ -3,6 +3,7 @@ title: my sprite abstract class
 author: kevin li
 date-created: 2024-05-14
 '''
+from colors import Color
 import pygame
 
 class MySprite:
@@ -10,13 +11,14 @@ class MySprite:
     abstract sprite class to build other sprites
     '''
 
-    def __init__(self, width=0, height=0, x=0, y=0, speed=10):
+    def __init__(self, width=0, height=0, x=0, y=0, speed=10, color=Color.white):
         self._width = width
         self._height = height
         self._dimensions = (self._width, self._height)
         self._x = x
         self._y = y
         self._position = (self._x, self._y)
+        self._color = color
         self._surface = pygame.Surface
         self._speed = speed
         self._dir_x = 1
@@ -43,7 +45,13 @@ class MySprite:
         self.__updatePosition()
     def setSpeed(self, new_speed):
         self._speed = new_speed
-
+    def setColor(self, new_color):
+        '''
+        this only changes the variable, it does not change the surface
+        :param new_color:
+        :return:
+        '''
+        self._color = new_color
     def setX(self, x):
         self._x = x
         self.__updatePosition()
