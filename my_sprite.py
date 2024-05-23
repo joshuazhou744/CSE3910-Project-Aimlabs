@@ -41,6 +41,17 @@ class MySprite:
         if pressed_keys[pygame.K_s]:
             self.y -= self.speed
         self.updatePosition()
+
+    def wrapEdge(self, max_width, max_height, min_width=0, min_height=0):
+        if self.x > max_width:
+            self.x = min_width - self.surface.get_width()
+        elif self.x < min_width - self.surface.get_width():
+            self.x = max_width - self.surface.get_width()
+
+        if self.y > max_height:
+            self.y = min_height - self.surface.get_height()
+        elif self.y < min_height - self.surface.get_height():
+            self.y = max_height - self.surface.get_height()
     def setSpeed(self, new_speed):
         self.speed = new_speed
 
