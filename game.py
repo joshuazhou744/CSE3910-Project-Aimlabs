@@ -21,11 +21,22 @@ if __name__ == "__main__":
     for i in range(3):
         boxes.append(Box(10,10, randint(0,window.getVirtualWidth()), randint(0,window.getVirtualHeight())))
 
+    pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
+    pygame.mouse.set_visible(False)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            elif event.type == pygame.MOUSEMOTION:
+                # Get mouse movement
+                mouse_x, mouse_y = event.rel
+                for box in boxes:
+                    box.x += mouse_x
+                    box.y += mouse_y
+                # Center the mouse cursor again
+                pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
 
         keys_pressed = pygame.key.get_pressed()
 
