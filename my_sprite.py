@@ -4,13 +4,14 @@ author: kevin li
 date-created: 2024-05-14
 '''
 import pygame
+from colors import Color
 
 class MySprite:
     '''
     abstract sprite class to build other sprites
     '''
 
-    def __init__(self, width=0, height=0, x=0, y=0, speed=10):
+    def __init__(self, width=0, height=0, x=0, y=0, speed=10, color=Color.white):
         self.width = width
         self.height = height
         self.dimensions = (self.width, self.height)
@@ -21,6 +22,7 @@ class MySprite:
         self.speed = speed
         self.dir_x = 1
         self.dir_y = 1
+        self.color = color
 
     # modifier methods (setter methods)
     def marqueeX(self, max_x, min_x=0):
@@ -42,16 +44,6 @@ class MySprite:
             self.y -= self.speed
         self.updatePosition()
 
-    def wrapEdge(self, max_width, max_height, min_width=0, min_height=0):
-        if self.x > max_width:
-            self.x = min_width - self.surface.get_width()
-        elif self.x < min_width - self.surface.get_width():
-            self.x = max_width - self.surface.get_width()
-
-        if self.y > max_height:
-            self.y = min_height - self.surface.get_height()
-        elif self.y < min_height - self.surface.get_height():
-            self.y = max_height - self.surface.get_height()
     def setSpeed(self, new_speed):
         self.speed = new_speed
 
