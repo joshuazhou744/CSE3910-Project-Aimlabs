@@ -1,3 +1,5 @@
+from MySprite import MySprite
+import pygame
 class Text(MySprite):
     def __init__(self, text, font_family = "Arial", font_size=36, x=0, y=0):
         MySprite.__init__(self, x=x, y=y)
