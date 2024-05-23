@@ -41,8 +41,12 @@ class Target(MySprite):
         else:
             self.is_mouse_over = False
 
-    def isClicked(self):
+    def isClicked(self, keys_pressed):
         self.checkMouseOver()
+        if self.is_mouse_over and pygame.MOUSEBUTTONDOWN:
+            self.is_clicked = True
+        else:
+            self.is_clicked = False
 
 
 
