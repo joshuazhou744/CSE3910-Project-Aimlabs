@@ -1,5 +1,5 @@
 import pygame
-from MySprite import MySprite
+from my_sprite import MySprite
 
 class ImageSprite(MySprite):
 
