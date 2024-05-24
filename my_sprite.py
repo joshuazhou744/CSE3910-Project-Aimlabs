@@ -44,6 +44,18 @@ class MySprite:
             self.y -= self.speed
         self.updatePosition()
 
+    def stopAtEdge(self, max_width, min_width, max_height, min_height):
+        if self.x > (max_width-self.getWidth()):
+            self.x = max_width-self.getWidth()
+        elif self.x < min_width:
+            self.x = min_width
+        if self.y > (max_height-self.getHeight()):
+            self.y = max_height-self.getHeight()
+        elif self.y < min_height:
+            self.y = min_height
+        self.setPosition(self.x, self.y)
+
+
     def setSpeed(self, new_speed):
         self.speed = new_speed
 
