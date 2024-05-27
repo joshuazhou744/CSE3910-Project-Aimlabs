@@ -4,14 +4,16 @@ date-created: 5/23/2024
 author: kevin li
 '''
 from my_sprite import MySprite
+from image_sprite import ImageSprite
 import pygame
+from colors import Color
 
-class Target(MySprite):
-    def __init__(self, radius=1):
-        MySprite.__init__(self)
+class Target(ImageSprite):
+    def __init__(self, image_file_location, radius=1, x=1, y=1, speed=1):
+        ImageSprite.__init__(self, image_file_location=image_file_location)
+        MySprite.__init__(self, x=x, y=y, speed=speed)
+        self.color = Color.red
         self.radius = radius
-        self.surface = pygame.Surface(self.dimensions, pygame.SRCALPHA, 32)
-        self.surface.fill(self.color)
         self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
         self.is_clicked = False
         self.is_x_mouse_over = False
@@ -48,6 +50,8 @@ class Target(MySprite):
                 self.is_clicked = True
         else:
             self.is_clicked = False
+
+
 
 
 
