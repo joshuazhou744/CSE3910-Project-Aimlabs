@@ -40,6 +40,8 @@ if __name__ == "__main__":
                     target.y += mouse_y*target.speed
                 # Center the mouse cursor again
                 pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+
 
         keys_pressed = pygame.key.get_pressed()
 
