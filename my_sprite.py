@@ -87,3 +87,16 @@ class MySprite:
 
     def getPosition(self):
         return self.position
+
+    def isCollision(self, WIDTH, HEIGHT, POSITION):
+        '''
+        use the width, height, and position of an external sprite to test if it is colliding with the given sprite
+        :param WIDTH: int
+        :param HEIGHT: int
+        :param POSITION: tuple
+        '''
+
+        if POSITION[0] >= self.x - WIDTH and POSITION[0] <= self.x + self.getWidth() and POSITION[1] >= self.y - HEIGHT and POSITION[1] <= self.y + self.getHeight():
+            return True
+        else:
+            return False

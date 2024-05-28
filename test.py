@@ -38,7 +38,7 @@ if __name__ == '__main__':
                 pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos_x, mouse_pos_y = event.pos
-                if
+                if target.isCollision():
 
 
         target.checkClicked(pygame.event.get(), pygame.mouse.get_pos())
