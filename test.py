@@ -43,9 +43,6 @@ if __name__ == '__main__':
 
         keys_pressed = pygame.key.get_pressed()
 
-
-        target.WASDMove(keys_pressed)
-
         window.clearScreen()
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
         window.getScreen().blit(target.getSurface(), target.getPosition())
