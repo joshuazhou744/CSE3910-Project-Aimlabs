@@ -34,6 +34,10 @@ class Window:
         self.clock.tick(self.fps) # waits the appropriate amount of time for updated frame
         pygame.display.flip() # update window with new frame
 
+    def displayUpdate(self):
+        self.clock.tick(self.fps)
+        pygame.display.update()
+
     def clearScreen(self):
         '''
         fill the screen with the bg color

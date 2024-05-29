@@ -1,3 +1,4 @@
+from my_sprite import MySprite
 class Button:
     def __init__(self, pos, text_input, font, base_color, hover_color):
         self.x_pos = pos[0]
