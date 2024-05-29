@@ -48,7 +48,8 @@ if __name__ == "__main__":
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for target in targets:
                     if target.isCollision(25, 25, (window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)):
-                        targets.remove(target)
+                        target.setPosition(randint(0, window.getVirtualWidth() - target.getWidth()),
+                           randint(0, window.getVirtualHeight() - target.getHeight()))
 
 
         keys_pressed = pygame.key.get_pressed()

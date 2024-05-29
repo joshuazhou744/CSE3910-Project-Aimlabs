@@ -22,6 +22,7 @@ def gridshot():
         grid_back.changeColor(grid_mouse_pos)
         grid_back.update(window.getScreen())
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -33,10 +34,14 @@ def gridshot():
         pygame.display.update()
 
 def webshot():
+    target = Target("assets/target.png", 0, 0)
+    target.setScale(0.1)
+    target.setPosition(400 - target.getWidth() // 2, 300 - target.getHeight() // 2)
     while True:
         web_mouse_pos = pygame.mouse.get_pos()
 
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
+        window.getScreen().blit(target.getSurface(), target.getPosition())
 
         web_back = Button(pos=(window.getVirtualWidth()-100, window.getVirtualHeight()-30),
                            text_input="Main Menu", font=get_font(30),base_color=Color.white, hover_color=Color.green)
@@ -50,6 +55,9 @@ def webshot():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if web_back.checkForInput(web_mouse_pos):
                     main_menu()
+            if target.isCollision(25, 25, (window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)):
+                target.setPosition(randint(0, window.getVirtualWidth() - target.getWidth()),
+                   randint(0, window.getVirtualHeight() - target.getHeight()))
 
         pygame.display.update()
 
