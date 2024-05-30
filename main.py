@@ -7,30 +7,78 @@ from target import Target
 from button import Button
 from window import Window
 import pygame
+from random import randint
+from gridshot import Gridshot
 def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
 
 
-def gridshot():
+def gridshot(window):
+    gridshot = Gridshot()
+    grid_mouse_pos = pygame.mouse.get_pos()
+
+    grid_back = Button(pos=(window.getVirtualWidth() - 100, window.getVirtualHeight() - 30),
+                       text_input="Main Menu", font=get_font(30), base_color=Color.white, hover_color=Color.green)
+    grid_back.changeColor(grid_mouse_pos)
+    grid_back.update(window.getScreen())
+
+    text = Text(text=f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}", font=get_font(24), color=Color.black)
+
+    crosshair = ImageSprite("assets/crosshair.png")
+    crosshair.setScale(0.01)
+    crosshair.setPosition(window.getVirtualWidth() // 2 - crosshair.getWidth() // 2,
+                          window.getVirtualHeight() // 2 - crosshair.getHeight() // 2)
+
+    pygame.mouse.set_visible(False)
+
+    targets = []
+    for i in range(5):
+        target = Target("assets/target.png", 0, 0, speed=0.5)
+        target.setScale(0.1)
+        target.setPosition(randint(int(window.getVirtualWidth()*0.2), int(window.getVirtualWidth()*0.8) - target.getWidth()),
+                           randint(int(window.getVirtualWidth()*0.2), int(window.getVirtualHeight()*0.8) - target.getHeight()))
+        targets.append(target)
+
     while True:
-        grid_mouse_pos = pygame.mouse.get_pos()
-
-        window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
-
-        grid_back = Button(pos=(window.getVirtualWidth()-100, window.getVirtualHeight()-30),
-                           text_input="Main Menu", font=get_font(30),base_color=Color.white, hover_color=Color.green)
-        grid_back.changeColor(grid_mouse_pos)
-        grid_back.update(window.getScreen())
-
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEMOTION:
+                # Get mouse movement
+                mouse_x, mouse_y = event.rel
+                for target in targets:
+                    target.x += mouse_x*target.speed
+                    target.y += mouse_y*target.speed
+                # Center the mouse cursor again
+                pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                gridshot.shots += 1
+                gridshot.updateAccuracy()
+                text.setText(f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}")
                 if grid_back.checkForInput(grid_mouse_pos):
                     main_menu()
+                for target in targets:
+                    if target.isCollision(25, 25, (window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)):
+                        target.setPosition(randint(int(window.getVirtualWidth() * 0.2),
+                                                   int(window.getVirtualWidth() * 0.8) - target.getWidth()),
+                                           randint(int(window.getVirtualWidth() * 0.2),
+                                                   int(window.getVirtualHeight() * 0.8) - target.getHeight()))
+                        gridshot.hits += 1
+                        gridshot.updateAccuracy()
+                        text.setText(f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}")
 
+        keys_pressed = pygame.key.get_pressed()
+
+        for target in targets:
+            target.WASDMove(keys_pressed)
+
+        window.clearScreen()
+        window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
+        window.getScreen().blit(text.getSurface(), text.getPosition())
+        for target in targets:
+            window.getScreen().blit(target.getSurface(), target.getPosition())
+        window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
 
 def webshot():
@@ -111,7 +159,7 @@ def main_menu():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if grid_button.checkForInput(menu_mouse_pos):
-                    gridshot()
+                    gridshot(window)
                 if web_button.checkForInput(menu_mouse_pos):
                     webshot()
                 if flash_button.checkForInput(menu_mouse_pos):

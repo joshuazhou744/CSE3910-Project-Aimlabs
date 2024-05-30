@@ -7,6 +7,7 @@ class Color:
     blue = (0, 0, 255)
     orange = (255, 145, 0)
     purple = (175, 25, 255)
+    black = (0,0,0)
 
     @staticmethod
     def getRandom():
