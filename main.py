@@ -8,21 +8,16 @@ from button import Button
 from window import Window
 import pygame
 from random import randint
-from gridshot import Gridshot
+from score import Score
 def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
 
 
 def gridshot(window):
-    gridshot = Gridshot()
+    score = Score()
     grid_mouse_pos = pygame.mouse.get_pos()
 
-    grid_back = Button(pos=(window.getVirtualWidth() - 100, window.getVirtualHeight() - 30),
-                       text_input="Main Menu", font=get_font(30), base_color=Color.white, hover_color=Color.green)
-    grid_back.changeColor(grid_mouse_pos)
-    grid_back.update(window.getScreen())
-
-    text = Text(text=f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}", font=get_font(24), color=Color.black)
+    text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24), color=Color.black)
 
     crosshair = ImageSprite("assets/crosshair.png")
     crosshair.setScale(0.01)
@@ -53,25 +48,24 @@ def gridshot(window):
                 # Center the mouse cursor again
                 pygame.mouse.set_pos(window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                gridshot.shots += 1
-                gridshot.updateAccuracy()
-                text.setText(f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}")
-                if grid_back.checkForInput(grid_mouse_pos):
-                    main_menu()
+                score.shots += 1
+                score.updateAccuracy()
+                text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
                 for target in targets:
                     if target.isCollision(25, 25, (window.getVirtualWidth() // 2, window.getVirtualHeight() // 2)):
-                        target.setPosition(randint(int(window.getVirtualWidth() * 0.2),
-                                                   int(window.getVirtualWidth() * 0.8) - target.getWidth()),
-                                           randint(int(window.getVirtualWidth() * 0.2),
-                                                   int(window.getVirtualHeight() * 0.8) - target.getHeight()))
-                        gridshot.hits += 1
-                        gridshot.updateAccuracy()
-                        text.setText(f"Shots: {gridshot.shots} Hits: {gridshot.hits} Accuracy: {gridshot.accuracy}")
+                        target.setPosition(randint(int(window.getVirtualWidth() * 0.4),
+                                                   int(window.getVirtualWidth() * 0.6) - target.getWidth()),
+                                           randint(int(window.getVirtualWidth() * 0.4),
+                                                   int(window.getVirtualHeight() * 0.6) - target.getHeight()))
+                        score.hits += 1
+                        score.updateAccuracy()
+                        text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
 
         keys_pressed = pygame.key.get_pressed()
 
         for target in targets:
             target.WASDMove(keys_pressed)
+
 
         window.clearScreen()
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
