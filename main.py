@@ -15,6 +15,7 @@ def get_font(size):
 
 def gridshot(window):
     score = Score()
+    end_screen = False
     grid_mouse_pos = pygame.mouse.get_pos()
 
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24), color=Color.black)
@@ -74,11 +75,42 @@ def gridshot(window):
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
+        if check_ended(score.hits, 10):
+            window.clearScreen()
+            pygame.mouse.set_visible(True)
+            end_screen = True
+            break
+
+    end_text = get_font(25).render(f"Congratulations! Game Ended, Final Accuracy {score.accuracy}", True, '#000000')
+    end_rect = end_text.get_rect(center=(window.getVirtualWidth() // 2, 250))
+    end_button = Button(pos=(window.getVirtualWidth() // 2, 320),
+                        text_input=f" Click Here to Return to Main Menu ",
+                        font=get_font(30), base_color=Color.red, hover_color=Color.green)
+
+    while end_screen:
+        window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
+        menu_mouse_pos = pygame.mouse.get_pos()
+
+        window.getScreen().blit(end_text, end_rect)
+
+        end_button.changeColor(menu_mouse_pos)
+        end_button.update(window.getScreen())
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_button.checkForInput(menu_mouse_pos):
+                    end_screen = False
+        pygame.display.update()
 def webshot():
     score = Score()
     counter = 0
+    end_screen = False
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24),
                 color=Color.black)
+
 
     crosshair = ImageSprite("assets/crosshair.png")
     crosshair.setScale(0.01)
@@ -122,6 +154,40 @@ def webshot():
         window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
+
+        if check_ended(score.hits, 10):
+            window.clearScreen()
+            pygame.mouse.set_visible(True)
+            end_screen = True
+            break
+
+    end_text = get_font(25).render(f"Congratulations! Game Ended, Final Accuracy {score.accuracy}", True, '#000000')
+    end_rect = end_text.get_rect(center=(window.getVirtualWidth() // 2, 250))
+    end_button = Button(pos=(window.getVirtualWidth() // 2, 320),
+                        text_input=f" Click Here to Return to Main Menu ",
+                        font=get_font(30), base_color=Color.red, hover_color=Color.green)
+
+    while end_screen:
+        window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
+        menu_mouse_pos = pygame.mouse.get_pos()
+
+        window.getScreen().blit(end_text, end_rect)
+
+        end_button.changeColor(menu_mouse_pos)
+        end_button.update(window.getScreen())
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_button.checkForInput(menu_mouse_pos):
+                    end_screen = False
+        pygame.display.update()
+
+
+
+
 
 
 
@@ -230,7 +296,12 @@ def main_menu():
                     exit()
         pygame.display.update()
 
-def end_screen():
+def check_ended(current_score, target_score):
+    if current_score >= target_score:
+        return True
+    else:
+        return False
+
 
 
 
