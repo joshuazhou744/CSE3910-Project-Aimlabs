@@ -74,7 +74,6 @@ def gridshot(window):
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
-
 def webshot():
     score = Score()
     counter = 0
@@ -142,8 +141,6 @@ def flashshot():
                           window.getVirtualHeight() // 2 - crosshair.getHeight() // 2)
     pygame.mouse.set_visible(False)
 
-    flash = False
-
     targets = []
     target = Target("assets/target.png", 0, 0, speed=0.4)
     target.setScale(0.1)
@@ -181,9 +178,6 @@ def flashshot():
                         score.updateAccuracy()
                         text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
 
-        while flash:
-            window.getScreen().blit(flash_img.getSurface(), flash_img.getPosition())
-
         for target in targets:
             target.updatePosition()
 
@@ -193,6 +187,7 @@ def flashshot():
         for target in targets:
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
+        window.getScreen().blit(flash_img.getSurface(), flash_img.getPosition())
         pygame.display.update()
 
 
@@ -234,6 +229,11 @@ def main_menu():
                     pygame.quit()
                     exit()
         pygame.display.update()
+
+def end_screen():
+
+
+
 if __name__ == '__main__':
     pygame.init()
 
