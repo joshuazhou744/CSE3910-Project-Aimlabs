@@ -230,11 +230,7 @@ def main_menu():
                     exit()
         pygame.display.update()
 
-def check_ended(current_score, target_score):
-    if current_score >= target_score:
-        return True
-    else:
-        return False
+def end_screen():
 
 
 
