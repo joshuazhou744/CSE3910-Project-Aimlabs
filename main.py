@@ -85,7 +85,7 @@ def gridshot(window):
     end_rect = end_text.get_rect(center=(window.getVirtualWidth() // 2, 250))
     end_button = Button(pos=(window.getVirtualWidth() // 2, 320),
                         text_input=f" Click Here to Return to Main Menu ",
-                        font=get_font(30), base_color=Color.red, hover_color=Color.green)
+                        font=get_font(30), base_color=Color.black, hover_color=Color.green)
 
     while end_screen:
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
@@ -165,7 +165,7 @@ def webshot():
     end_rect = end_text.get_rect(center=(window.getVirtualWidth() // 2, 250))
     end_button = Button(pos=(window.getVirtualWidth() // 2, 320),
                         text_input=f" Click Here to Return to Main Menu ",
-                        font=get_font(30), base_color=Color.red, hover_color=Color.green)
+                        font=get_font(30), base_color=Color.black, hover_color=Color.green)
 
     while end_screen:
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
