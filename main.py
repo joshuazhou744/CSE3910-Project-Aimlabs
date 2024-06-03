@@ -10,6 +10,7 @@ import pygame
 from random import randint
 from score import Score
 from flash import Flash
+from player import Player
 def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
 
@@ -75,6 +76,11 @@ def gridshot(window):
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
+        if check_ended(score.hits, 10):
+            pygame.mouse.set_visible(True)
+            endscreen(window, score.accuracy)
+
+
 def webshot(window):
     score = Score()
     counter = 0
@@ -124,7 +130,9 @@ def webshot(window):
         window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
-
+        if check_ended(score.hits, 10):
+            pygame.mouse.set_visible(True)
+            endscreen(window, score.accuracy)
 
 
 def flashshot(window):
@@ -207,6 +215,10 @@ def flashshot(window):
         if flash_screen:
             flash.flash_image(window, flash_img)
 
+        if check_ended(score.hits, 5):
+            pygame.mouse.set_visible(True)
+            endscreen(window, score.accuracy)
+
 
 def main_menu():
     while True:
@@ -247,8 +259,38 @@ def main_menu():
                     exit()
         pygame.display.update()
 
-def end_screen():
-    pass
+def check_ended(current_score, target_score):
+    if current_score >= target_score:
+        return True
+    else:
+        return False
+
+def endscreen(window, accuracy):
+    while True:
+        window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
+        end_mouse_pos = pygame.mouse.get_pos()
+
+        end_text = get_font(25).render(f"Game Over! Final Accuracy {accuracy}", True, '#000000')
+        end_rect = end_text.get_rect(center=(window.getVirtualWidth() // 2, 250))
+        end_button = Button(pos=(window.getVirtualWidth() // 2, 320),
+                            text_input=f" Click Here to Return to Main Menu ",
+                            font=get_font(30), base_color=Color.red, hover_color=Color.green)
+
+        window.getScreen().blit(end_text, end_rect)
+
+        end_button.changeColor(end_mouse_pos)
+        end_button.update(window.getScreen())
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_button.checkForInput(end_mouse_pos):
+                    main_menu()
+        pygame.display.update()
+
+
 
 
 if __name__ == '__main__':
