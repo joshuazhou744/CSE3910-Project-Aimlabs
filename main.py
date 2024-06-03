@@ -15,7 +15,7 @@ def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
 
 
-def gridshot(window):
+def gridshot(window, sens):
     score = Score()
     grid_mouse_pos = pygame.mouse.get_pos()
 
@@ -30,7 +30,7 @@ def gridshot(window):
 
     targets = []
     for i in range(5):
-        target = Target("assets/target.png", 0, 0, speed=0.5)
+        target = Target("assets/target.png", 0, 0, speed=sens)
         target.setScale(0.1)
         target.setPosition(randint(int(window.getVirtualWidth()*0.2), int(window.getVirtualWidth()*0.8) - target.getWidth()),
                            randint(int(window.getVirtualWidth()*0.2), int(window.getVirtualHeight()*0.8) - target.getHeight()))
@@ -81,7 +81,7 @@ def gridshot(window):
             endscreen(window, score.accuracy)
 
 
-def webshot(window):
+def webshot(window, sens):
     score = Score()
     counter = 0
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24),
@@ -94,7 +94,7 @@ def webshot(window):
 
     pygame.mouse.set_visible(False)
 
-    target = Target("assets/target.png", 0, 0)
+    target = Target("assets/target.png", 0, 0, speed=sens)
     target.setScale(0.1)
     target.setPosition(400 - target.getWidth() // 2, 300 - target.getHeight() // 2)
 
@@ -135,7 +135,7 @@ def webshot(window):
             endscreen(window, score.accuracy)
 
 
-def flashshot(window):
+def flashshot(window, sens):
     score = Score()
     flash = Flash()
     flash_mouse_pos = pygame.mouse.get_pos()
@@ -153,7 +153,7 @@ def flashshot(window):
     pygame.mouse.set_visible(False)
 
     targets = []
-    target = Target("assets/target.png", 0, 0, speed=0.4)
+    target = Target("assets/target.png", 0, 0, speed=sens)
     target.setScale(0.1)
     target.setPosition(randint(int(window.getVirtualWidth() * 0.2),
                                int(window.getVirtualWidth() * 0.8) - target.getWidth()),
@@ -225,6 +225,8 @@ def main_menu():
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
         menu_mouse_pos = pygame.mouse.get_pos()
 
+        sens = 0.5
+
         menu_text = get_font(100).render("Main Menu", True, '#b68f40')
         menu_rect = menu_text.get_rect(center=(window.getVirtualWidth() // 2, 100))
 
@@ -249,11 +251,11 @@ def main_menu():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if grid_button.checkForInput(menu_mouse_pos):
-                    gridshot(window)
+                    gridshot(window, sens)
                 if web_button.checkForInput(menu_mouse_pos):
-                    webshot(window)
+                    webshot(window, sens)
                 if flash_button.checkForInput(menu_mouse_pos):
-                    flashshot(window)
+                    flashshot(window, sens)
                 if quit_button.checkForInput(menu_mouse_pos):
                     pygame.quit()
                     exit()
