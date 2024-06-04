@@ -66,8 +66,8 @@ def gridshot(window, sens):
         keys_pressed = pygame.key.get_pressed()
 
         for target in targets:
-            target.updatePosition()
-
+            target.wrapEdge(1.1 * window.getVirtualWidth(), -1.1 * window.getVirtualWidth(),
+                            1.1 * window.getVirtualHeight(), -1.1 * window.getVirtualHeight())
 
         window.clearScreen()
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
@@ -123,6 +123,9 @@ def webshot(window, sens):
                     score.hits += 1
                     score.updateAccuracy()
                     text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
+
+        target.wrapEdge(1.1 * window.getVirtualWidth(), -1.1 * window.getVirtualWidth(),
+                            1.1 * window.getVirtualHeight(), -1.1 * window.getVirtualHeight())
 
         window.clearScreen()
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
@@ -199,6 +202,7 @@ def flashshot(window, sens):
         if not flash_screen:
             for target in targets:
                 target.updatePosition()
+                target.wrapEdge(1.1*window.getVirtualWidth(), -1.1*window.getVirtualWidth(), 1.1*window.getVirtualHeight(), -1.1*window.getVirtualHeight())
 
             window.clearScreen()
             window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())

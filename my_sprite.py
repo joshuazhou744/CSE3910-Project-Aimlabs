@@ -55,6 +55,16 @@ class MySprite:
             self.y = min_height
         self.setPosition(self.x, self.y)
 
+    def wrapEdge(self, max_width, min_width, max_height, min_height):
+        if self.x > (max_width - self.getWidth()):
+            self.x = min_width
+        elif self.x < min_width:
+            self.x = max_width
+        if self.y > (max_height - self.getHeight()):
+            self.y = min_height
+        elif self.y < min_height:
+            self.y = max_height
+        self.setPosition(self.x, self.y)
 
     def setSpeed(self, new_speed):
         self.speed = new_speed
