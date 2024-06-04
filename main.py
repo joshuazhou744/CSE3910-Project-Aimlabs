@@ -10,6 +10,8 @@ import pygame
 from random import randint
 from score import Score
 from flash import Flash
+import pygame.mixer
+import sounds
 from player import Player
 def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
@@ -18,6 +20,8 @@ def get_font(size):
 def gridshot(window, sens):
     score = Score()
     grid_mouse_pos = pygame.mouse.get_pos()
+
+
 
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24), color=Color.black)
 
@@ -60,6 +64,7 @@ def gridshot(window, sens):
                                            randint(int(window.getVirtualWidth() * 0.4),
                                                    int(window.getVirtualHeight() * 0.6) - target.getHeight()))
                         score.hits += 1
+                        sounds.hit_sfx.play()
                         score.updateAccuracy()
                         text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
 
@@ -121,6 +126,7 @@ def webshot(window, sens):
                     target.setPosition(randint(0, window.getVirtualWidth() - target.getWidth()),
                        randint(0, window.getVirtualHeight() - target.getHeight()))
                     score.hits += 1
+                    sounds.hit_sfx.play()
                     score.updateAccuracy()
                     text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
 
@@ -190,6 +196,7 @@ def flashshot(window, sens):
                                            randint(int(window.getVirtualWidth() * 0.2),
                                                    int(window.getVirtualHeight() * 0.8) - target.getHeight()))
                         score.hits += 1
+                        sounds.hit_sfx.play()
                         score.updateAccuracy()
                         text.setText(f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}")
                 target_visible_time = pygame.time.get_ticks()
