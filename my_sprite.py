@@ -5,6 +5,7 @@ date-created: 2024-05-14
 '''
 import pygame
 from colors import Color
+from random import randint
 
 class MySprite:
     '''
@@ -57,13 +58,13 @@ class MySprite:
 
     def wrapEdge(self, max_width, min_width, max_height, min_height):
         if self.x > (max_width - self.getWidth()):
-            self.x = min_width
+            self.x = min_width + randint(0, int(max_height // 10))
         elif self.x < min_width:
-            self.x = max_width
+            self.x = max_width - randint(0, int(max_height // 10))
         if self.y > (max_height - self.getHeight()):
-            self.y = min_height
+            self.y = min_height + randint(0, int(max_height // 10))
         elif self.y < min_height:
-            self.y = max_height
+            self.y = max_height - randint(0, int(max_height // 10))
         self.setPosition(self.x, self.y)
 
     def setSpeed(self, new_speed):

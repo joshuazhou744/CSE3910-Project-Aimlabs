@@ -71,8 +71,8 @@ def gridshot(window, sens):
         keys_pressed = pygame.key.get_pressed()
 
         for target in targets:
-            target.wrapEdge(1.1 * window.getVirtualWidth(), -1.1 * window.getVirtualWidth(),
-                            1.1 * window.getVirtualHeight(), -1.1 * window.getVirtualHeight())
+            target.wrapEdge(1.2 * window.getVirtualWidth(), -1.2 * window.getVirtualWidth(),
+                            1.2 * window.getVirtualHeight(), -1.2 * window.getVirtualHeight())
 
         window.clearScreen()
         window.getScreen().blit(bg_img.getSurface(), bg_img.getPosition())
@@ -322,5 +322,4 @@ if __name__ == '__main__':
         window.clearScreen()
         main_menu()
         window.updateFrame()
-
 
