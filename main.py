@@ -81,7 +81,7 @@ def gridshot(window, sens):
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
-        if check_ended(score.hits, 10):
+        if check_ended(score.hits, 20):
             pygame.mouse.set_visible(True)
             endscreen(window, score.accuracy)
 
@@ -314,11 +314,16 @@ if __name__ == '__main__':
     bg_img = ImageSprite("assets/background.png")
     bg_img.setScale(3, 1.7)
 
+    clock = pygame.time.Clock()
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+
+        clock.tick(30)
+
         window.clearScreen()
         main_menu()
         window.updateFrame()
