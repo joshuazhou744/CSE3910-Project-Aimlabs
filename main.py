@@ -224,6 +224,7 @@ def flashshot(window, sens):
                 flash_screen = True
 
         if flash_screen:
+            sounds.skye_sfx.play()
             flash.flash_image(window, flash_img)
 
         if check_ended(score.hits, 5):

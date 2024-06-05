@@ -10,4 +10,4 @@ pygame.init()
 
 hit_sfx = pygame.mixer.Sound('assets/hit_sound.mp3')
 
-skye_sfx = pygame.mixer.Sound('assets/skye.mp3')
+skye_sfx = pygame.mixer.Sound('assets/hawk_out.mp3')
