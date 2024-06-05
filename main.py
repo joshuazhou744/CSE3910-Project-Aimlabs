@@ -150,7 +150,7 @@ def flashshot(window, sens):
     flash_mouse_pos = pygame.mouse.get_pos()
 
     flash_img = ImageSprite("assets/flash.png")
-    flash_img.setScale(0.4,0.5)
+    flash_img.setScale(0.9, 1)
 
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24),
                 color=Color.black)
