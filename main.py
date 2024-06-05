@@ -226,6 +226,7 @@ def flashshot(window, sens):
         if flash_screen:
             sounds.skye_sfx.play()
             flash.flash_image(window, flash_img)
+            sounds.skye_sfx.play()
 
         if check_ended(score.hits, 5):
             pygame.mouse.set_visible(True)
@@ -239,7 +240,7 @@ def main_menu():
 
         sens = 0.5
 
-        menu_text = get_font(100).render("Main Menu", True, '#b68f40')
+        menu_text = get_font(100).render("Go Skye", True, '#b68f40')
         menu_rect = menu_text.get_rect(center=(window.getVirtualWidth() // 2, 100))
 
         grid_button = Button(pos=(window.getVirtualWidth() // 2, 220), text_input="Gridshot",
