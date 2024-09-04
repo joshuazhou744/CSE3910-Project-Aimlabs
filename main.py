@@ -17,7 +17,7 @@ def get_font(size):
     return pygame.font.Font("assets/font.ttc", size)
 
 
-def gridshot(window, sens):
+def gridshot(window, sens, end_score):
     score = Score()
     grid_mouse_pos = pygame.mouse.get_pos()
 
@@ -81,12 +81,12 @@ def gridshot(window, sens):
             window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
-        if check_ended(score.hits, 20):
+        if check_ended(score.hits, end_score):
             pygame.mouse.set_visible(True)
             endscreen(window, score.accuracy)
 
 
-def webshot(window, sens):
+def webshot(window, sens, end_score):
     score = Score()
     counter = 0
     text = Text(text=f"Shots: {score.shots} Hits: {score.hits} Accuracy: {score.accuracy}", font=get_font(24),
@@ -139,12 +139,12 @@ def webshot(window, sens):
         window.getScreen().blit(target.getSurface(), target.getPosition())
         window.getScreen().blit(crosshair.getSurface(), crosshair.getPosition())
         pygame.display.update()
-        if check_ended(score.hits, 10):
+        if check_ended(score.hits, end_score):
             pygame.mouse.set_visible(True)
             endscreen(window, score.accuracy)
 
 
-def flashshot(window, sens):
+def flashshot(window, sens, end_score):
     score = Score()
     flash = Flash()
     flash_mouse_pos = pygame.mouse.get_pos()
@@ -228,7 +228,7 @@ def flashshot(window, sens):
             flash.flash_image(window, flash_img)
             sounds.skye_sfx.play()
 
-        if check_ended(score.hits, 5):
+        if check_ended(score.hits, end_score):
             pygame.mouse.set_visible(True)
             endscreen(window, score.accuracy)
 
@@ -264,11 +264,11 @@ def main_menu():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if grid_button.checkForInput(menu_mouse_pos):
-                    gridshot(window, sens)
+                    gridshot(window, sens, 10)
                 if web_button.checkForInput(menu_mouse_pos):
-                    webshot(window, sens)
+                    webshot(window, sens, 10)
                 if flash_button.checkForInput(menu_mouse_pos):
-                    flashshot(window, sens)
+                    flashshot(window, sens, 5)
                 if quit_button.checkForInput(menu_mouse_pos):
                     pygame.quit()
                     exit()
